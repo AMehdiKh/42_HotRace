@@ -3,6 +3,8 @@
 #include <stdio.h> // ! For Debugging ; DONT FORGET TO REMOVE
 #include <stdlib.h>
 
+void	forgive_me_lord_valgrind(char	*tab[]); //! NOT NESSECERY TAKE OUT LATER!
+
 /*
 * todo: 
 *	[x] Make Small Test data file
@@ -47,16 +49,18 @@ unsigned int    hash_function(const char *key)
     return (hash_value % 16777213);
 }
 
-void	ft_putstr_fd(char *s, int fd) // for writing the search querys 
+int	ft_putstr_fd(char *s, int fd) // for writing the search querys 
 {
+	int		ret;
 	size_t	i;
 
 	if (!s)
-		return ;
+		return (-1);
 	i = 0;
 	while (s[i])
 		i++;
-	write(fd, s, i);
+	ret = write(fd, s, i);
+	return (ret);
 }
 
 //hash functionfrom old rush
@@ -101,7 +105,6 @@ int	main(void)
 			// store it
 			tab[hash_function(key)] = value;
 			free(key);
-			// free(value); //! This Fixes a Leak but invites a use after free
 			// printf("HASH TABLE : %s\n", tab[hash_function(key)]); //DEBUG
 		}
 
@@ -117,6 +120,23 @@ int	main(void)
 			
 			free(key);
 		}
+		
 	}
+	forgive_me_lord_valgrind(tab); //! NOT NESSECERY TAKE OUT LATER!
+
 	return (0);
+}
+
+void	forgive_me_lord_valgrind(char	*tab[]) //! NOT NESSECERY TAKE OUT LATER!
+{
+	// this is not a major leak but valgrind will label it as still reach able to get a clean valgrind report we can use this:
+	// Free allocated memory in tab
+	for (int i = 0; i < 16777213; ++i)
+	{
+		if (tab[i])
+		{
+			free(tab[i]);
+			tab[i] = NULL;
+		}
+	}
 }

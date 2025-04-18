@@ -6,7 +6,7 @@
 /*   By: achoukri <achoukri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 16:30:19 by achoukri          #+#    #+#             */
-/*   Updated: 2025/04/18 22:14:17 by achoukri         ###   ########.fr       */
+/*   Updated: 2025/04/18 22:24:03 by achoukri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,11 +80,11 @@ char	*clean_static_buffer(char **static_buffer)
 
 char	*get_next_line(int fd)
 {
-	static char	*s_b[OPEN_MAX];
+	static char	*s_b[10024];
 	char		*line;
 	char		*buff;
 
-	if (fd < 0 || BUFFER_SIZE <= 0 || fd >= OPEN_MAX)
+	if (fd < 0 || BUFFER_SIZE <= 0 || fd >= 10024)
 		return (NULL);
 	buff = malloc(sizeof(char) * BUFFER_SIZE + 1);
 	if (!buff)

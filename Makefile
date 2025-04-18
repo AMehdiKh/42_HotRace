@@ -1,5 +1,4 @@
 # !NOT DONE
-# todo test for relinking add the gnl file the util file and the header file
 
 ################################################
 #                  FILES                       #
@@ -7,9 +6,11 @@
 
 NAME         = hotrace
 
-SRCS         = main.c
+SRCS         = main.c get_next_line.c utils.c
 
 OBJS         = $(SRCS:%.c=%.o)
+
+INC	         = hotrace.h
 
 
 ################################################
@@ -17,7 +18,7 @@ OBJS         = $(SRCS:%.c=%.o)
 ################################################
 
 CC           = cc
-CFLAGS       = -Wall -Wextra -Werror -03 # -Ofast -fsanitize=address -Wunreachable-code
+CFLAGS       = -Wall -Wextra -Werror -O3 # -Ofast -fsanitize=address -Wunreachable-code
 
 ################################################
 #                   RULES                      #
@@ -31,15 +32,15 @@ $(NAME): $(OBJS)
 	echo "$(GREEN)Built $(NAME)$(RESET)"
 
 # Compiling into object files
-%.o: %.c
-	$(CC) $(CFLAGS) $(CPPFLAGS) -c $< -o $@
+%.o: %.c $(INC)
+	$(CC) $(CFLAGS) -c $< -o $@
 
 ################################################
 #                 CLEANING                     #
 ################################################
 
 clean:
-	rm -rf %.o
+	rm -rf *.o
 
 fclean: clean
 	rm -f $(NAME)

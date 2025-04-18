@@ -1,11 +1,13 @@
+
 #include "hotrace.h"
+#include <stdio.h> // ! For Debugging ; DONT FORGET TO REMOVE
 
 /*
 * todo: 
 *	[x] Make Small Test data file
-*	[ ] Make the int main following the subjects requirements: gnl + norm
-    + can fetch the line from the giving data file (example.htr)
+*	[x] Make the int main following the subjects requirements: gnl + norm
 *	[ ] optimize int main
+*	[ ] Find a way to test the code efficiency 
 *	[ ] Generate Data For Testing (similar to an old rush)
 *	[ ] find a good hash function
 		+ chibihash64 (v2)
@@ -29,6 +31,17 @@
 
 // }
 
+//hash functionfrom old rush
+// unsigned int	hash_function(const char *key)
+// {
+// 	unsigned int	hash = 5031;
+
+// 	while (*key)
+// 		hash = hash * 101 + *key++;
+
+// 	return (hash % 16777213);
+// }
+
 //made this for learning hash tables
 unsigned int    hash_function(const char *key)
 {
@@ -44,7 +57,7 @@ unsigned int    hash_function(const char *key)
     return (hash_value % 16777213);
 }
 
-void	ft_putstr_fd(char *s, int fd) // for writing the search queries
+void	ft_putstr_fd(char *s, int fd) // for writing the search querys 
 {
 	size_t	i;
 
@@ -56,19 +69,67 @@ void	ft_putstr_fd(char *s, int fd) // for writing the search queries
 	write(fd, s, i);
 }
 
+// Function to remove newline from string - We can simplify this by editing the gnl function so it doesnt return a newline or make a new function
+char *trim_newline(char *str)
+{
+	char *end = str + ft_strlen(str) - 1;
+	if (*end == '\n')
+		*end = '\0';
+	return (str);
+}
+
 int	main(void)
 {
 	static char	*tab[16777213];
-	char		*line = NULL;
+	char *key = NULL;
+	char *value = NULL;
+	int reading_data = 1;
 
-
-	while ((line = get_next_line(1)) != NULL)
+	while ((key = get_next_line(0)) != NULL) //retreave next line
 	{
-		ft_putstr_fd("LINE: \n", 1);
-		ft_putstr_fd(line, 1);
+		// Check if we've reached the empty line that separates data from queries
+		if (key[0] == '\n')
+		{
+			free(key);
+			reading_data = 0;
+			continue;
+		}
+        
+		// Trim newlines
+		key = trim_newline(key);
 
+		if (reading_data == 1) // We're in etreaving mode
+		{
+			// printf("LINE: KEY  : %s\n", key);
 
+			value = get_next_line(0); //fetch the next line as a value
+			if (!value)
+				break;
 
+			// Trim newlines
+        	key = trim_newline(key);
+
+			// printf("LINE: VALUE: %s\n", value);
+
+			// must delete the '\n' before storing 
+			// store it
+			tab[hash_function(trim_newline(key))] = trim_newline(value);
+			
+			// printf("HASH TABLE : %s\n", tab[hash_function(key)]);
+		}
+
+		else // We're in query mode
+		{
+			// printf("END OF RETRIEVING DATA - WERE IN QUERY MODE\n");
+			value = tab[hash_function(key)];
+
+			if (value)
+				printf("%s\n", value);
+			else
+				printf("%s: Not found.\n", key);
+			
+			free(key);
+		}
 	}
 
 	return (0);

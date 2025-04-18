@@ -1,7 +1,6 @@
 
 #include "hotrace.h"
 #include <stdio.h> // ! For Debugging ; DONT FORGET TO REMOVE
-#include <stdlib.h>
 
 void	forgive_me_lord_valgrind(char	*tab[]); //! NOT NESSECERY TAKE OUT LATER!
 

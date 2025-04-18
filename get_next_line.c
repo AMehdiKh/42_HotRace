@@ -6,12 +6,11 @@
 /*   By: achoukri <achoukri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 16:30:19 by achoukri          #+#    #+#             */
-/*   Updated: 2025/04/18 22:24:03 by achoukri         ###   ########.fr       */
+/*   Updated: 2025/04/18 22:40:55 by achoukri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "hotrace.h"
-#include <stdio.h>
 
 char	*read_to_static_buffer(int fd, char **static_buffer, char *buff)
 {

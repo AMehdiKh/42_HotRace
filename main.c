@@ -1,6 +1,7 @@
 
 #include "hotrace.h"
 #include <stdio.h> // ! For Debugging ; DONT FORGET TO REMOVE
+#include <stdlib.h>
 
 /*
 * todo: 
@@ -31,17 +32,6 @@
 
 // }
 
-//hash functionfrom old rush
-// unsigned int	hash_function(const char *key)
-// {
-// 	unsigned int	hash = 5031;
-
-// 	while (*key)
-// 		hash = hash * 101 + *key++;
-
-// 	return (hash % 16777213);
-// }
-
 //made this for learning hash tables
 unsigned int    hash_function(const char *key)
 {
@@ -69,14 +59,17 @@ void	ft_putstr_fd(char *s, int fd) // for writing the search querys
 	write(fd, s, i);
 }
 
-// Function to remove newline from string - We can simplify this by editing the gnl function so it doesnt return a newline or make a new function
-char *trim_newline(char *str)
-{
-	char *end = str + ft_strlen(str) - 1;
-	if (*end == '\n')
-		*end = '\0';
-	return (str);
-}
+//hash functionfrom old rush
+// unsigned int	hash_function(const char *key)
+// {
+// 	unsigned int	hash = 5031;
+
+// 	while (*key)
+// 		hash = hash * 101 + *key++;
+
+// 	return (hash % 16777213);
+// }
+
 
 int	main(void)
 {
@@ -88,39 +81,33 @@ int	main(void)
 	while ((key = get_next_line(0)) != NULL) //retreave next line
 	{
 		// Check if we've reached the empty line that separates data from queries
-		if (key[0] == '\n')
+		if (!key[0])
 		{
 			free(key);
 			reading_data = 0;
 			continue;
 		}
-        
-		// Trim newlines
-		key = trim_newline(key);
 
 		if (reading_data == 1) // We're in etreaving mode
 		{
-			// printf("LINE: KEY  : %s\n", key);
+			// printf("LINE: KEY  : :%s:\n", key); //DEBUG
 
 			value = get_next_line(0); //fetch the next line as a value
 			if (!value)
 				break;
 
-			// Trim newlines
-        	key = trim_newline(key);
+			// printf("LINE: VALUE: %s\n", value); //DEBUG
 
-			// printf("LINE: VALUE: %s\n", value);
-
-			// must delete the '\n' before storing 
 			// store it
-			tab[hash_function(trim_newline(key))] = trim_newline(value);
-			
-			// printf("HASH TABLE : %s\n", tab[hash_function(key)]);
+			tab[hash_function(key)] = value;
+			free(key);
+			// free(value); //! This Fixes a Leak but invites a use after free
+			// printf("HASH TABLE : %s\n", tab[hash_function(key)]); //DEBUG
 		}
 
 		else // We're in query mode
 		{
-			// printf("END OF RETRIEVING DATA - WERE IN QUERY MODE\n");
+			// printf("END OF RETRIEVING DATA - WERE IN QUERY MODE\n"); //DEBUG
 			value = tab[hash_function(key)];
 
 			if (value)
@@ -131,6 +118,5 @@ int	main(void)
 			free(key);
 		}
 	}
-
 	return (0);
 }

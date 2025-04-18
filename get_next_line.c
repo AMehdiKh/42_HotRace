@@ -1,16 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
+/*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: achoukri <achoukri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 16:30:19 by achoukri          #+#    #+#             */
-/*   Updated: 2025/04/18 18:36:23 by achoukri         ###   ########.fr       */
+/*   Updated: 2025/04/18 22:14:17 by achoukri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "hotrace.h"
+#include <stdio.h>
 
 char	*read_to_static_buffer(int fd, char **static_buffer, char *buff)
 {
@@ -46,7 +47,7 @@ char	*extract_line(char **static_buffer)
 
 	newline_pos = ft_strchr(*static_buffer, '\n');
 	if (newline_pos)
-		line_lenth = newline_pos - *static_buffer + 1;
+		line_lenth = newline_pos - *static_buffer;
 	else
 		line_lenth = ft_strlen(*static_buffer);
 	line = malloc(sizeof(char) * (line_lenth + 1));
@@ -97,3 +98,13 @@ char	*get_next_line(int fd)
 	s_b[fd] = clean_static_buffer(&s_b[fd]);
 	return (line);
 }
+
+// int main(void)
+// {
+// 	char *line = get_next_line(0);
+// 	printf("[%c]", line[0]);
+// 	printf("[%c]", line[1]);
+// 	printf("[%c]", line[2]);
+// 	printf("[%c]", line[3]);
+// 	return (0);
+// }

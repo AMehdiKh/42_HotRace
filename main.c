@@ -2,7 +2,7 @@
 #include "hotrace.h"
 #include <stdio.h> // ! For Debugging ; DONT FORGET TO REMOVE
 
-void	forgive_me_lord_valgrind(char	*tab[]); //! NOT NESSECERY TAKE OUT LATER!
+void	forgive_me_lord_valgrind(char	*tab[]); //! Important But Might Not Be NESSECERY and DECIDE OUT LATER!
 
 /*
 * todo: 
@@ -121,13 +121,14 @@ int	main(void)
 		}
 		
 	}
-	forgive_me_lord_valgrind(tab); //! NOT NESSECERY TAKE OUT LATER!
+	forgive_me_lord_valgrind(tab); //! Important But Might Not Be NESSECERY and DECIDE OUT LATER!
 
 	return (0);
 }
 
-void	forgive_me_lord_valgrind(char	*tab[]) //! NOT NESSECERY TAKE OUT LATER!
+void	forgive_me_lord_valgrind(char	*tab[]) //! Important But Might Not Be NESSECERY and DECIDE OUT LATER!
 {
+	// if the code will be tested with valgrind
 	// this is not a major leak but valgrind will label it as still reach able to get a clean valgrind report we can use this:
 	// Free allocated memory in tab
 	for (int i = 0; i < 16777213; ++i)

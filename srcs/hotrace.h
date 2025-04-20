@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   hotrace.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ael-khel <ael-khel@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: ael-khel <ael-khel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/19 01:44:34 by ael-khel          #+#    #+#             */
-/*   Updated: 2025/04/20 15:40:51 by ael-khel         ###   ########.fr       */
+/*   Updated: 2025/04/20 17:45:37 by ael-khel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,7 @@
 # include <stdbool.h>
 # include <stdint.h>
 
-
-
-# define BUFFER_SIZE	4096u
+# define BUFFER_SIZE	8192u
 # define TABLE_SIZE		16777619u
 
 # define FNV_OFFSET 2166136261u
@@ -38,7 +36,7 @@ typedef struct	s_entry
 
 typedef	struct s_hash
 {
-	t_entry		**array; // try with *array
+	t_entry		**array;
 	uint32_t	size;
 	uint32_t	count;
 }	t_hash;
@@ -62,7 +60,7 @@ char	*ft_strjoin(char *s1, char *s2);
 uint32_t	ft_strlen(const char *s);
 void	*ft_memcpy(void *dst, const void *src, uint32_t n);
 char	*ft_strndup( const char *str, const int len );
-
+void	ft_clean(t_hash *table);
 
 
 

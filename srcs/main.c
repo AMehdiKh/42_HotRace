@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ael-khel <ael-khel@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: ael-khel <ael-khel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/19 01:49:06 by ael-khel          #+#    #+#             */
-/*   Updated: 2025/04/20 15:45:45 by ael-khel         ###   ########.fr       */
+/*   Updated: 2025/04/20 16:11:50 by ael-khel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,8 @@ int	ft_read_data( t_hash *table )
 		}
 		if (!search_mode)
 		{
-			if (ft_insert_data(table, key, value, ft_getline(&value)))
+			ft_getline(&value);
+			if (ft_insert_data(table, key, value, 0))
 				return (1);
 		}
 		else
@@ -147,7 +148,7 @@ void	ft_search_data( t_hash *table, const char *key )
 		{
 			if (ft_strcmp(table->array[index]->key, key) == 0)
 			{
-				write(1, table->array[index]->value, table->array[index]->value_len);
+				write(1, table->array[index]->value, ft_strlen(table->array[index]->value));
 				break ;
 			}
 		}

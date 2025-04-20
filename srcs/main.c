@@ -6,7 +6,7 @@
 /*   By: ael-khel <ael-khel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/19 01:49:06 by ael-khel          #+#    #+#             */
-/*   Updated: 2025/04/20 17:34:14 by ael-khel         ###   ########.fr       */
+/*   Updated: 2025/04/20 17:50:34 by ael-khel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ uint32_t	ft_getline(char **line)
 			{
 				*line = ft_strjoin(reserve, ft_strndup(buffer + buffer_pos, i));
 				buffer_pos += i;
+				free(reserve);
 				reserve = NULL;
 				return ( 1 );
 			}
@@ -153,13 +154,41 @@ void	ft_search_data( t_hash *table, const char *key )
 	}
 }
 
+#include <stdio.h>
+#include <unistd.h>
+#include <stdlib.h>
+
+
+void 	ll()
+{
+	system("leaks -q hotrace");
+}
 
 int	main( void )
 {
+	atexit(ll);
 	t_hash	table[1];
 
 	if (ft_init_table(table))
 		return (1);
-	
-	return (ft_read_data(table));
+	ft_read_data(table);
+	ft_clean(table);
+	return (0);
+}
+
+void	ft_clean(t_hash *table)
+{
+	uint32_t	i;
+
+	i = 0;
+	while (i < TABLE_SIZE)
+	{
+		if (table->array[i])
+		{
+			free(table->array[i]->key);
+			free(table->array[i]->value);
+		}
+		free(table->array[i]);
+		i++;
+	}
 }

@@ -6,12 +6,11 @@
 /*   By: ael-khel <ael-khel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/19 01:49:06 by ael-khel          #+#    #+#             */
-/*   Updated: 2025/04/20 16:11:50 by ael-khel         ###   ########.fr       */
+/*   Updated: 2025/04/20 17:34:14 by ael-khel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "hotrace.h"
-#include <stdint.h>
 
 uint32_t	ft_getline(char **line)
 {
@@ -19,7 +18,6 @@ uint32_t	ft_getline(char **line)
 	static int	buffer_size;
 	static int	buffer_pos;
 	char		*reserve;
-	uint32_t	len;
 	int			i;
 	
 	reserve = NULL;
@@ -39,9 +37,8 @@ uint32_t	ft_getline(char **line)
 			{
 				*line = ft_strjoin(reserve, ft_strndup(buffer + buffer_pos, i));
 				buffer_pos += i;
-				len = ft_strlen(reserve) + i;
 				reserve = NULL;
-				return ( len );
+				return ( 1 );
 			}
 		}
 		reserve = ft_strndup(buffer + buffer_pos, i);
